@@ -65,3 +65,9 @@ features:
 
 annotation:
   textgrid_tiers: ["words", "phones", "breaks", "tones", "disc"]
+
+
+evaluation:
+  enable: true
+  metrics: ["SNR", "SI-SDR", "STOI", "PESQ", "LSD", "F0_corr"]
+  plots: ["waveform", "spectrogram", "pitch_energy", "correlation"]
