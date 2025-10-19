@@ -1,0 +1,7 @@
+kpi:
+  snr_gain_db_min: 6.0
+  stoi_min: 0.85
+  pesq_min: 2.5
+  si_sdr_min: 10.0
+  f0_corr_min: 0.90
+  lsd_db_max: 3.0

@@ -1,0 +1,67 @@
+project:
+  samplerate: 16000        # analysis SR
+  bitdepth: 16
+  seed: 20251019
+
+paths:
+  raw: raw_data
+  processed: processed_data
+  metadata: metadata
+
+processing:
+  # The pipeline executes stages in this order and writes outputs into
+  # processed_data/<stage_name>/<subdirs> automatically.
+  stages:
+    - 1_acquisition_preprocessing
+    - 2_signal_separation_chain
+    - 3_phonetic_linguistic_features
+    - 4_annotation_alignment
+    - 5_validation_verification
+
+dsp:
+  resample_rate: 16000
+  dehum:
+    enable: true
+    mains_hz: 50
+    harmonics: 5
+    pole_r: 0.985
+  dereverb:
+    enable: true
+    taps: 10
+    delay: 3
+    iterations: 3
+  denoise:
+    enable: true
+    method: mmse_lsa       # robust CPU method
+    noise_floor_db: -65
+  loudness:
+    enable: true
+    target_lufs: -23
+    truepeak_dbfs: -1.0
+  vad:
+    enable: true
+    mode: 2
+    frame_ms: 20
+    min_sec: 2.0
+    max_sec: 20.0
+    pad_sec: 0.05
+  separation:
+    enable: false          # (optional) integrate Demucs later
+
+features:
+  acoustic:
+    n_fft: 1024
+    hop_ms: 10
+    win_ms: 25
+    n_mels: 80
+    n_mfcc: 40
+    fmin: 20
+    fmax: 7600
+    lpc_order: 16          # LPC coefficients (phonetic/PNCC proxy)
+  prosodic:
+    f0_min_hz: 50
+    f0_max_hz: 500
+    hop_ms: 10
+
+annotation:
+  textgrid_tiers: ["words", "phones", "breaks", "tones", "disc"]
